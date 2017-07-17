@@ -90,7 +90,8 @@ unittest{
  assert( "2017-07-18T04".ymdh.lasts( "2017-07-18T02".ymdh ) == Interval!DateTime( "2017-07-18T04".ymdh, 2.hours) );
 }
 
-auto hh(Direction d = Direction.fwd, I)( I i)
+///
+auto hh(Direction d, I)( I i)
 if (d != Direction.both)
 {
  static if (d==Direction.fwd)
@@ -99,4 +100,25 @@ if (d != Direction.both)
   return i.bwdRange( h=>h-1.hours );
 }
 
+///
+unittest{
+ assert( Interval!DateTime( DateTime( 2017,05,15,4,0,0 ), 2.hours).hh == 
+  Interval!DateTime(DateTime(2017,05,15,4,0,0), 2.hours).fwdRange(h=>h+1.hours) );
+}
+
+///
+auto hh(string d = "fwd", I)( I i)
+if (d == "fwd" || d == "bwd")
+{
+ static if (d=="fwd")
+  return i.fwdRange( h=>h+1.hours );
+ else 
+  return i.bwdRange( h=>h-1.hours );
+}
+
+///
+unittest{
+ assert( Interval!DateTime( DateTime( 2017,05,15,4,0,0 ), 2.hours).hh!"bwd" == 
+  Interval!DateTime(DateTime(2017,05,15,4,0,0), 2.hours).bwdRange(h=>h+1.hours) );
+}
 
