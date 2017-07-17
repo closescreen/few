@@ -90,6 +90,13 @@ unittest{
  assert( "2017-07-18T04".ymdh.lasts( "2017-07-18T02".ymdh ) == Interval!DateTime( "2017-07-18T04".ymdh, 2.hours) );
 }
 
-
+auto hh(Direction d = Direction.fwd, I)( I i)
+if (d != Direction.both)
+{
+ static if (d==Direction.fwd)
+  return i.fwdRange( h=>h+1.hours );
+ else 
+  return i.bwdRange( h=>h-1.hours );
+}
 
 
