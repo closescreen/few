@@ -61,7 +61,22 @@ unittest{
 }
 
 ///
-auto lasts(TP)(TP tp, Duration dur){ 
+auto lasts(TP)(TP tp, Duration dur)
+if (isTimePoint!TP)
+{ 
  return Interval!TP( tp, dur );
 }
+
+///
+unittest{
+ assert( DateTime(2017,05,15,4,0,0).lasts(2.hours) = Interval!DateTime(DateTime(2017,05,15,4,0,0), 2.hours) );
+}
+
+///
+auto lasts( TP1, TP2 )( TP1 tp1, TP2 tp2 )
+if ( isTimePoint!TP1 && isTimePoint!TP2 )
+{
+ return Interval!TP1( tp1<tp2 ? tp1, tp2 : tp2 , tp1 );
+}
+
 
