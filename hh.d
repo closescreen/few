@@ -91,34 +91,82 @@ unittest{
 }
 
 ///
-auto hh(Direction d, I)( I i)
-if (d != Direction.both)
+auto rng( string units, string direction, I )( I interval )
+if (units == "seconds" || units == "minutes" || units == "hours" || units == "days" || units == "weeks")
 {
- static if (d==Direction.fwd)
-  return i.fwdRange( h=>h+1.hours );
- else 
-  return i.bwdRange( h=>h-1.hours );
+ static if (direction == "fwd")
+  return interval.fwdRange( tp => tp + dur!units(1) );
+ else
+  return interval.bwdRange( tp => tp - dur!units(1) );
 }
 
 ///
 unittest{
- assert( Interval!DateTime( DateTime( 2017,05,15,4,0,0 ), 2.hours).hh == 
-  Interval!DateTime(DateTime(2017,05,15,4,0,0), 2.hours).fwdRange(h=>h+1.hours) );
+ assert( DateTime(2017,05,15,4,0,0).lasts(2.hours).rng!("hours","fwd") == DateTime(2017,05,15,4,0,0).lasts(2.hours).fwdRange( t=>t+1.hours ) );
 }
 
 ///
+auto ss(string d = "fwd", I)( I i)
+if (d == "fwd" || d == "bwd")
+{ 
+ return rng!("seconds",d)( i ); 
+}
+
+///
+unittest{
+ assert( DateTime(2017,05,15,4,0,0).lasts(2.hours).ss!"bwd" == DateTime(2017,05,15,4,0,0).lasts(2.hours).bwdRange( t=>t-1.seconds ) );
+ assert( DateTime(2017,05,15,4,0,0).lasts(2.hours).ss == DateTime(2017,05,15,4,0,0).lasts(2.hours).fwdRange( t=>t+1.seconds ) );
+}
+
+///
+auto mm(string d = "fwd", I)( I i)
+if (d == "fwd" || d == "bwd")
+{ 
+ return rng!("minutes",d)( i ); 
+}
+
+///
+unittest{
+ assert( DateTime(2017,05,15,4,0,0).lasts(2.hours).mm!"bwd" == DateTime(2017,05,15,4,0,0).lasts(2.hours).bwdRange( t=>t-1.minutes ) );
+ assert( DateTime(2017,05,15,4,0,0).lasts(2.hours).mm == DateTime(2017,05,15,4,0,0).lasts(2.hours).fwdRange( t=>t+1.minutes ) );
+}
+
+
 auto hh(string d = "fwd", I)( I i)
 if (d == "fwd" || d == "bwd")
-{
- static if (d=="fwd")
-  return i.fwdRange( h=>h+1.hours );
- else 
-  return i.bwdRange( h=>h-1.hours );
+{ 
+ return rng!("hours",d)( i ); 
 }
 
 ///
 unittest{
- assert( Interval!DateTime( DateTime( 2017,05,15,4,0,0 ), 2.hours).hh!"bwd" == 
-  Interval!DateTime(DateTime(2017,05,15,4,0,0), 2.hours).bwdRange(h=>h+1.hours) );
+ assert( DateTime(2017,05,15,4,0,0).lasts(2.hours).hh!"bwd" == DateTime(2017,05,15,4,0,0).lasts(2.hours).bwdRange( t=>t-1.hours ) );
+ assert( DateTime(2017,05,15,4,0,0).lasts(2.hours).hh == DateTime(2017,05,15,4,0,0).lasts(2.hours).fwdRange( t=>t+1.hours ) );
+}
+
+///
+auto dd(string d = "fwd", I)( I i)
+if (d == "fwd" || d == "bwd")
+{
+ return rng!("days",d)( i );
+}
+
+///
+unittest{
+ assert( DateTime(2017,05,15,4,0,0).lasts(3.days).dd!"bwd" == DateTime(2017,05,15,4,0,0).lasts(3.days).bwdRange( t=>t-1.days ) );
+ assert( DateTime(2017,05,15,4,0,0).lasts(3.days).dd == DateTime(2017,05,15,4,0,0).lasts(3.days).fwdRange( t=>t+1.days ) );
+}
+
+///
+auto ww(string d = "fwd", I)( I i)
+if (d == "fwd" || d == "bwd")
+{
+ return rng!("weeks",d)( i );
+}
+
+///
+unittest{
+ assert( DateTime(2017,05,15,4,0,0).lasts(20.days).ww!"bwd" == DateTime(2017,05,15,4,0,0).lasts(20.days).bwdRange( t=>t-1.weeks ) );
+ assert( DateTime(2017,05,15,4,0,0).lasts(20.days).ww == DateTime(2017,05,15,4,0,0).lasts(20.days).fwdRange( t=>t+1.weeks ) );
 }
 
