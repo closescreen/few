@@ -91,8 +91,9 @@ unittest{
 }
 
 ///
-auto rng( string units, string direction, I )( I interval )
-if (units == "seconds" || units == "minutes" || units == "hours" || units == "days" || units == "weeks")
+auto rng( string units, string direction, TP )( Interval!TP interval )
+if ( isTimePoint!TP && 
+  (units == "seconds" || units == "minutes" || units == "hours" || units == "days" || units == "weeks"))
 {
  static if (direction == "fwd")
   return interval.fwdRange( tp => tp + dur!units(1) );
@@ -106,8 +107,8 @@ unittest{
 }
 
 ///
-auto ss(string d = "fwd", I)( I i)
-if (d == "fwd" || d == "bwd")
+auto ss(string d = "fwd", TP )( Interval!TP i)
+if (isTimePoint!TP && (d == "fwd" || d == "bwd"))
 { 
  return rng!("seconds",d)( i ); 
 }
@@ -119,8 +120,8 @@ unittest{
 }
 
 ///
-auto mm(string d = "fwd", I)( I i)
-if (d == "fwd" || d == "bwd")
+auto mm( string d = "fwd", TP )( Interval!TP i)
+if (isTimePoint!TP && (d == "fwd" || d == "bwd"))
 { 
  return rng!("minutes",d)( i ); 
 }
@@ -132,8 +133,8 @@ unittest{
 }
 
 
-auto hh(string d = "fwd", I)( I i)
-if (d == "fwd" || d == "bwd")
+auto hh(string d = "fwd", TP )( Interval!TP i )
+if (isTimePoint!TP && (d == "fwd" || d == "bwd"))
 { 
  return rng!("hours",d)( i ); 
 }
@@ -145,8 +146,8 @@ unittest{
 }
 
 ///
-auto dd(string d = "fwd", I)( I i)
-if (d == "fwd" || d == "bwd")
+auto dd( string d = "fwd", TP )( Interval!TP i )
+if (isTimePoint!TP && (d == "fwd" || d == "bwd"))
 {
  return rng!("days",d)( i );
 }
@@ -158,8 +159,8 @@ unittest{
 }
 
 ///
-auto ww(string d = "fwd", I)( I i)
-if (d == "fwd" || d == "bwd")
+auto ww(string d = "fwd", TP )( Interval!TP i)
+if (isTimePoint!TP && (d == "fwd" || d == "bwd"))
 {
  return rng!("weeks",d)( i );
 }
