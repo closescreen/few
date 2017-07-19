@@ -176,3 +176,6 @@ unittest{
  assert( DateTime(2017,05,15,4,0,0).lasts(20.days).ww == DateTime(2017,05,15,4,0,0).lasts(20.days).fwdRange( t=>t+1.weeks ) );
 }
 
+unittest{
+ assert(false);
+}
