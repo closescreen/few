@@ -82,7 +82,12 @@ unittest{
 auto lasts( TP1, TP2 )( TP1 tp1, TP2 tp2 )
 if ( isTimePoint!TP1 && isTimePoint!TP2 )
 {
- return tp1<tp2 ? Interval!TP1( tp1, tp2 ) : Interval!TP1( tp2 , tp1 );
+ static if ( is( TP2 == TP1 ))
+  return tp1<tp2 ? Interval!TP1( tp1, tp2 ) : Interval!TP1( tp2 , tp1 );
+ else{
+  auto tp2_ = tp2.to!TP1;
+  return tp1 < tp2_ ? Interval!TP1( tp1, tp2_ ) : Interval!TP1( tp2_ , tp1 );
+ }  
 }
 
 ///
