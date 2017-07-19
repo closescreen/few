@@ -1,5 +1,7 @@
 import std.datetime, std.string, std.regex, std.exception, std.conv, std.range, std.range, std.algorithm;
-
+/+
+Форматирование резличных типов данных в строки с помощью задания формата
++/
 
 ///
 auto toMyString(string fmt, TP)( TP tp )
