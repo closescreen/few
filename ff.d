@@ -27,7 +27,7 @@ if ( isTimePoint!TP )
 
 ///
 unittest{
- assert( DateTime(2017,05,22,19,45,55).strfDateTime("date:%F hour:%H min/sec:%M/%S") == "date:2017-05-22 hour:19 min/sec:45/55" );
+ assert( DateTime(2017,05,22,19,45,55).toMyString!"date:%F hour:%H min/sec:%M/%S" == "date:2017-05-22 hour:19 min/sec:45/55" );
 }
 
 ///
