@@ -109,10 +109,9 @@ if ( isTimePoint!TP &&
 
 ///
 unittest{
- auto r1 = DateTime(2017,05,15,4,0,0).lasts(2.hours).rng!("hours","fwd").ff!"%FT%H";
- auto r2 = DateTime(2017,05,15,4,0,0).lasts(2.hours).fwdRange( t=>t+1.hours ).ff!"%FT%H";
-// writeln( r1, r2);
- //assert( r1 == r2 );
+ auto r1 = DateTime(2017,05,15,4,0,0).lasts(2.hours).rng!("hours","fwd").array; 
+ auto r2 = DateTime(2017,05,15,4,0,0).lasts(2.hours).fwdRange( t=>t+1.hours ).array; 
+ assert( r1 == r2 );
 }
 
 ///
@@ -124,8 +123,8 @@ if (isTimePoint!TP && (d == "fwd" || d == "bwd"))
 
 ///
 unittest{
- //assert( DateTime(2017,05,15,4,0,0).lasts(2.hours).ss!"bwd" == DateTime(2017,05,15,4,0,0).lasts(2.hours).bwdRange( t=>t-1.seconds ) );
- //assert( DateTime(2017,05,15,4,0,0).lasts(2.hours).ss == DateTime(2017,05,15,4,0,0).lasts(2.hours).fwdRange( t=>t+1.seconds ) );
+ assert( DateTime(2017,05,15,4,0,0).lasts(2.hours).ss!"bwd".array == DateTime(2017,05,15,4,0,0).lasts(2.hours).bwdRange( t=>t-1.seconds ).array );
+ assert( DateTime(2017,05,15,4,0,0).lasts(2.hours).ss.array == DateTime(2017,05,15,4,0,0).lasts(2.hours).fwdRange( t=>t+1.seconds ).array );
 }
 
 ///
@@ -137,8 +136,8 @@ if (isTimePoint!TP && (d == "fwd" || d == "bwd"))
 
 ///
 unittest{
-// assert( DateTime(2017,05,15,4,0,0).lasts(2.hours).mm!"bwd" == DateTime(2017,05,15,4,0,0).lasts(2.hours).bwdRange( t=>t-1.minutes ) );
-// assert( DateTime(2017,05,15,4,0,0).lasts(2.hours).mm == DateTime(2017,05,15,4,0,0).lasts(2.hours).fwdRange( t=>t+1.minutes ) );
+ assert( DateTime(2017,05,15,4,0,0).lasts(2.hours).mm!"bwd".array == DateTime(2017,05,15,4,0,0).lasts(2.hours).bwdRange( t=>t-1.minutes ).array );
+ assert( DateTime(2017,05,15,4,0,0).lasts(2.hours).mm.array == DateTime(2017,05,15,4,0,0).lasts(2.hours).fwdRange( t=>t+1.minutes ).array );
 }
 
 
@@ -150,8 +149,8 @@ if (isTimePoint!TP && (d == "fwd" || d == "bwd"))
 
 ///
 unittest{
-// assert( DateTime(2017,05,15,4,0,0).lasts(2.hours).hh!"bwd" == DateTime(2017,05,15,4,0,0).lasts(2.hours).bwdRange( t=>t-1.hours ) );
-// assert( DateTime(2017,05,15,4,0,0).lasts(2.hours).hh == DateTime(2017,05,15,4,0,0).lasts(2.hours).fwdRange( t=>t+1.hours ) );
+ assert( DateTime(2017,05,15,4,0,0).lasts(2.hours).hh!"bwd".array == DateTime(2017,05,15,4,0,0).lasts(2.hours).bwdRange( t=>t-1.hours ).array );
+ assert( DateTime(2017,05,15,4,0,0).lasts(2.hours).hh.array == DateTime(2017,05,15,4,0,0).lasts(2.hours).fwdRange( t=>t+1.hours ).array );
 }
 
 ///
@@ -163,8 +162,8 @@ if (isTimePoint!TP && (d == "fwd" || d == "bwd"))
 
 ///
 unittest{
-// assert( DateTime(2017,05,15,4,0,0).lasts(3.days).dd!"bwd" == DateTime(2017,05,15,4,0,0).lasts(3.days).bwdRange( t=>t-1.days ) );
-// assert( DateTime(2017,05,15,4,0,0).lasts(3.days).dd == DateTime(2017,05,15,4,0,0).lasts(3.days).fwdRange( t=>t+1.days ) );
+ assert( DateTime(2017,05,15,4,0,0).lasts(3.days).dd!"bwd".array == DateTime(2017,05,15,4,0,0).lasts(3.days).bwdRange( t=>t-1.days ).array );
+ assert( DateTime(2017,05,15,4,0,0).lasts(3.days).dd.array == DateTime(2017,05,15,4,0,0).lasts(3.days).fwdRange( t=>t+1.days ).array );
 }
 
 ///
@@ -176,8 +175,8 @@ if (isTimePoint!TP && (d == "fwd" || d == "bwd"))
 
 ///
 unittest{
-// assert( DateTime(2017,05,15,4,0,0).lasts(20.days).ww!"bwd" == DateTime(2017,05,15,4,0,0).lasts(20.days).bwdRange( t=>t-1.weeks ) );
-// assert( DateTime(2017,05,15,4,0,0).lasts(20.days).ww == DateTime(2017,05,15,4,0,0).lasts(20.days).fwdRange( t=>t+1.weeks ) );
+ assert( DateTime(2017,05,15,4,0,0).lasts(20.days).ww!"bwd".array == DateTime(2017,05,15,4,0,0).lasts(20.days).bwdRange( t=>t-1.weeks ).array );
+ assert( DateTime(2017,05,15,4,0,0).lasts(20.days).ww.array == DateTime(2017,05,15,4,0,0).lasts(20.days).fwdRange( t=>t+1.weeks ).array );
 }
 
 
