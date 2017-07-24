@@ -33,7 +33,7 @@ unittest{
 ///
 auto near( alias pred = sizegt )( string name1, string name2 )
 if ( is(typeof(pred(name2)) == bool))
-{ import std.stdio;
+{ 
  auto tested_name = name1.dirName.buildPath( name2.baseName );
  return pred( tested_name ); 
 }
@@ -45,5 +45,21 @@ unittest{
   assert( f1.near(f2) == false );
   assert( f1.near!sizegt(f2) == false );
   assert( f1.near!sizele(f1) == true );
+  assert( f1.near!sizele(f1.baseName) == true );
+}
+
+
+auto near( string name2, alias pred = sizegt )( string name1 )
+if ( is(typeof(pred(name2)) == bool))
+{ 
+ auto tested_name = name1.dirName.buildPath( name2.baseName );
+ return pred( tested_name ); 
+}
+
+
+///
+unittest{
+  assert( "./aaa/mynoexistfilename1".near!"mynoexistfilename1" == false );
+  assert( "./aaa/mynoexistfilename1".near!("mynoexistfilename1",sizele) == true );
 }
 
