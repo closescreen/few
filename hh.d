@@ -56,10 +56,9 @@ unittest{
 
 ///
 auto ymdh(string ymdh){
-  auto r = r".*(\d{4})\D(\d{2})\D(\d{2})\D(\d{2})";
-  auto m = matchFirst( ymdh, regex( r ));
+  auto m = matchFirst( ymdh, rymdh );
   if (m) return DateTime( m[1].to!int, m[2].to!int, m[3].to!int, m[4].to!int, 0, 0 );
-  else throw new DateTimeException( format( "Can't parse %s with %s", ymdh, r));
+  else throw new DateTimeException( format( "Can't parse %s", ymdh));
 }
 
 ///
@@ -85,10 +84,9 @@ auto ymd(){
 
 ///
 auto ymd(string ymd){
-  auto r = r".*(\d{4})\D(\d{2})\D(\d{2})";
-  auto m = matchFirst( ymd, regex( r ));
+  auto m = matchFirst( ymd, rymd );
   if (m) return DateTime( m[1].to!int, m[2].to!int, m[3].to!int, 0, 0, 0 );
-  else throw new DateTimeException( format( "Can't parse %s with %s", ymd, r));
+  else throw new DateTimeException( format( "Can't parse %s", ymd));
 }
 
 ///
