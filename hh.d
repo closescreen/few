@@ -4,6 +4,35 @@ import std.stdio, std.datetime, std.string, std.regex, std.exception, std.conv, 
 +/
 
 ///
+template rymd( string standart = "ISOExt" ){
+  static if (standart=="ISOExt"){
+    auto rymd(){
+      return ctRegex!(`(?P<year>\d{4})\D(?P<month>\d\d)\D(?P<day>\d\d)`);
+    }
+  }
+}
+
+///
+unittest{
+ assert( rymd == ctRegex!(`(?P<year>\d{4})\D(?P<month>\d\d)\D(?P<day>\d\d)`) );
+}
+
+///
+static template rymdh( string standart = "ISOExt" ){
+  static if (standart=="ISOExt"){
+    auto rymdh(){
+      return ctRegex!(`(?P<year>\d{4})\D(?P<month>\d\d)\D(?P<day>\d\d)\D(?P<hour>\d\d)`);
+    }
+  }
+}
+
+///
+unittest{
+ assert( rymdh == ctRegex!(`(?P<year>\d{4})\D(?P<month>\d\d)\D(?P<day>\d\d)\D(?P<hour>\d\d)`) );
+}
+
+
+///
 auto ymdh(T)(T time ) 
 if( is(typeof(time)==SysTime) || is(typeof(time)==DateTime))
 {

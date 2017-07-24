@@ -4,7 +4,7 @@
 import std.regex;
 
 
-template ymd( string standart = "ISOExt" ){
+datetintemplate ymd( string standart = "ISOExt" ){
  static if (standart=="ISOExt"){
   auto ymd(){
    return ctRegex!(`(?P<year>\d{4})\D(?P<month>\d\d)\D(?P<day>\d\d)`);
