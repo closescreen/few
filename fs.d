@@ -30,18 +30,33 @@ unittest{
  assert( sizegt(f)==false );
 }
 
+
+
 ///
-auto near( alias pred = sizegt )( string name1, string name2 )
-if ( is(typeof(pred(name2)) == bool))
-{ 
- auto tested_name = name1.dirName.buildPath( name2.baseName );
+auto near( alias pred = sizegt )( string name1, string pattern )
+if ( is(typeof(pred(pattern)) == bool))
+{
+  string repl( Captures!(string) m ){
+    switch (m[0])
+    {
+	case "%b": return name1.baseName;
+	case "%B": return name1.baseName.stripExtension;
+	case "%E": return name1.extension;
+	default: return m[0];
+    }
+  }
+ 
+ static auto re = regex(`%[bBE]`,"g");
+ auto pattern_expanded = pattern.baseName.replaceAll!repl(re);
+ 
+ auto tested_name = name1.dirName.buildPath( pattern_expanded );
  return pred( tested_name ); 
 }
 
 ///
 unittest{
   auto f1 = "./aaa/mynoexistfilename1";
-  auto f2 = "./aaa/mynoexistfilename2";
+  auto f2 = "./aaa/mynoexistfilepattern";
   assert( f1.near(f2) == false );
   assert( f1.near!sizegt(f2) == false );
   assert( f1.near!sizele(f1) == true );
@@ -49,11 +64,26 @@ unittest{
 }
 
 
-auto near( string name2, alias pred = sizegt )( string name1 )
-if ( is(typeof(pred(name2)) == bool))
+auto near( string pattern, alias pred = sizegt )( string name1 )
+if ( is(typeof(pred(pattern)) == bool))
 { 
- auto tested_name = name1.dirName.buildPath( name2.baseName );
+
+  string repl( Captures!(string) m ){
+    switch (m[0])
+    {
+	case "%b": return name1.baseName;
+	case "%B": return name1.baseName.stripExtension;
+	case "%E": return name1.extension;
+	default: return m[0];
+    }
+  }
+ 
+ static auto re = regex(`%[bBE]`,"g");
+ auto pattern_expanded = pattern.baseName.replaceAll!repl(re);
+ 
+ auto tested_name = name1.dirName.buildPath( pattern_expanded );
  return pred( tested_name ); 
+
 }
 
 
